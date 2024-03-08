@@ -22,6 +22,7 @@ jobs:
           composer dump-autoload --optimize --no-dev --classmap-authoritative
           - name: Migrate
             run: php artisan migrate --force
+            
       - name: Deploy
         run: |
           sudo apt update
