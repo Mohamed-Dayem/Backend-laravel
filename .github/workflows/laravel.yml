@@ -20,6 +20,9 @@ jobs:
         run: |
           composer install --no-autoloader --no-scripts
           composer dump-autoload --optimize --no-dev --classmap-authoritative
+          composer require laravel/sail --dev
+          php artisan sail:install
+          ./vendor/bin/sail up
       - name: Migrate
         run: php artisan migrate --force
             
