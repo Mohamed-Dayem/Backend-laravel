@@ -20,8 +20,8 @@ jobs:
         run: |
           composer install --no-autoloader --no-scripts
           composer dump-autoload --optimize --no-dev --classmap-authoritative
-          - name: Migrate
-            run: php artisan migrate --force
+      - name: Migrate
+        run: php artisan migrate --force
             
       - name: Deploy
         run: |
