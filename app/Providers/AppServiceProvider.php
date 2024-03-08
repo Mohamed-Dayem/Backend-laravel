@@ -22,3 +22,16 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 }
+use NunoMaduro\Collision\Adapters\Laravel\CollisionServiceProvider;
+
+/**
+ * Register any application services.
+ *
+ * @return void
+ */
+public function register()
+{
+    if ($this->app->environment('local')) {
+        $this->app->register(CollisionServiceProvider::class);
+    }
+}
