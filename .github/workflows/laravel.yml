@@ -6,41 +6,35 @@ on:
   pull_request:
     branches: [ "master" ]
 
+
 jobs:
   deploy:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Cache composer dependencies
-        uses: actions/cache@v1
-        with:
-          path: ~/.composer/cache/files
-          key: dependencies-php-7.4-composer-${{ hashFiles('composer.lock') }}
-          restore-keys: |
-            dependencies-php-7.4-composer-
+    - name: Setup PHP environment
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.0'
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.1
-          extensions: curl, dom, fileinfo, filter, iconv, json, libxml, mbstring, openssl, pcntl, pcre, pdo, simplexml, sqlite, pdo_sqlite, tokenizer, xml, xmlwriter, zip
+    - name: Install dependencies
+      run: composer install
 
-      - name: Install dependencies
-        run: |
-          composer require --dev nunomaduro/collision
-          composer install --no-autoloader --no-scripts
-          composer dump-autoload --optimize --no-dev --classmap-authoritative
-      
-      - name: Migrate
-        run: php artisan migrate --force
-       
+    - name: Copy environment file
+      run: |
+        if [ ! -f .env ]; then
+          cp .env.example .env
+        fi
 
-      - name: Deploy to production
-        run: |
-          sudo apt update
-          sudo apt install -y nginx
-          cd /var/www/html
-          git clone https://github.com/Mohamed-Dayem/Backend-laravel/tree/10.x.git
+    - name: Run database migrations
+      run: php artisan migrate
+
+    - name: Deploy to server
+      uses: appleboy/scp-action@master
+      with:
+        source: .
+        destination: /var/www/html
+        trust-certificate: true
