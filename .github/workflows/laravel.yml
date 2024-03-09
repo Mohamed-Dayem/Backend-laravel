@@ -6,34 +6,33 @@ on:
   pull_request:
     branches: [ "master" ]
 
-
 jobs:
   deploy:
     runs-on: self-hosted
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Setup PHP environment
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.0'
+      - name: Setup PHP environment
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
 
-    - name: Install dependencies
-      run: composer install
+      - name: Install dependencies
+        run: composer install
 
-    - name: Copy environment file
-      run: |
-        if [ ! -f .env ]; then
-          cp .env.example .env
-        fi
+      - name: Copy environment file
+        run: |
+          if [ ! -f .env ]; then
+            cp .env.example .env
+          fi
 
-    - name: Run database migrations
-      run: php artisan migrate
+      - name: Run database migrations
+        run: php artisan migrate
 
-    - name: Deploy to server
-       run: |
-        cd /var/www/html
-        git pull
-        php artisan migrate
+      - name: Deploy to server
+        run: |
+          cd /var/www/html
+          git pull
+          php artisan migrate
