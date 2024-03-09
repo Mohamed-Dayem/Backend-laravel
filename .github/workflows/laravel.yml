@@ -40,6 +40,7 @@ jobs:
 
       - name: Run migration and schema dump
         run: |
+          sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY 'your-password'; FLUSH PRIVILEGES;"
           mysql -h localhost -u root -S /var/run/mysqld/mysqld.sock -e "CREATE DATABASE IF NOT EXISTS laravel;"
           mysql -h localhost -u root laravel < database/database.sql
           php artisan migrate --force
