@@ -30,6 +30,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          composer require --dev nunomaduro/collision
           composer install --no-autoloader --no-scripts
           composer dump-autoload --optimize --no-dev --classmap-authoritative
       
