@@ -9,9 +9,13 @@ return [
     | Stateful Domains
     |--------------------------------------------------------------------------
     |
-    | Requests from the following domains / hosts will receive stateful API
-    | authentication cookies. Typically, these should include your local
-    | and production domains which access your API via a frontend SPA.
+    | This array contains the domains or hosts from which stateful API
+    | authentication cookies will be accepted. Typically, these should
+    | include your local and production domains which access your API
+    | via a frontend Single Page Application (SPA).
+    |
+    | The domain names should be separated by commas. The default value
+    | includes 'localhost', the application URL, '127.0.0.1', and '::1'.
     |
     */
 
@@ -26,10 +30,13 @@ return [
     | Sanctum Guards
     |--------------------------------------------------------------------------
     |
-    | This array contains the authentication guards that will be checked when
+    | This array specifies the authentication guards that will be checked when
     | Sanctum is trying to authenticate a request. If none of these guards
     | are able to authenticate the request, Sanctum will use the bearer
     | token that's present on an incoming request for authentication.
+    |
+    | The default value is set to 'web', which is the default guard defined
+    | in Laravel's 'config/auth.php' configuration file.
     |
     */
 
@@ -40,9 +47,12 @@ return [
     | Expiration Minutes
     |--------------------------------------------------------------------------
     |
-    | This value controls the number of minutes until an issued token will be
-    | considered expired. This will override any values set in the token's
+    | This value determines the number of minutes until an issued token will
+    | be considered expired. This will override any values set in the token's
     | "expires_at" attribute, but first-party sessions are not affected.
+    |
+    | Set this value to 'null' to disable token expiration. The default value
+    | is set to 'null'.
     |
     */
 
@@ -53,9 +63,10 @@ return [
     | Token Prefix
     |--------------------------------------------------------------------------
     |
-    | Sanctum can prefix new tokens in order to take advantage of numerous
-    | security scanning initiatives maintained by open source platforms
-    | that notify developers if they commit tokens into repositories.
+    | Sanctum can prefix new tokens to take advantage of security scanning
+    | initiatives that notify developers if they commit tokens into
+    | repositories. This can help prevent unauthorized access to your
+    | application.
     |
     | See: https://docs.github.com/en/code-security/secret-scanning/about-secret-scanning
     |
@@ -68,9 +79,9 @@ return [
     | Sanctum Middleware
     |--------------------------------------------------------------------------
     |
-    | When authenticating your first-party SPA with Sanctum you may need to
-    | customize some of the middleware Sanctum uses while processing the
-    | request. You may change the middleware listed below as required.
+    | This configuration specifies the middleware used by Sanctum while
+    | processing the request. You can customize the middleware listed below
+    | as required.
     |
     */
 
@@ -81,4 +92,5 @@ return [
     ],
 
 ];
+
 
