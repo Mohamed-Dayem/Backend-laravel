@@ -33,7 +33,7 @@ jobs:
       run: php artisan migrate
 
     - name: Deploy to server
-        run: |
-         cd /var/www/html
-         git pull
-         php artisan migrate
+       run: |
+        cd /var/www/html
+        git pull
+        php artisan migrate
