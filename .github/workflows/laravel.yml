@@ -10,16 +10,6 @@ jobs:
   deploy:
     runs-on: self-hosted
 
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_DATABASE: laravel
-        ports:
-          - 3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -46,14 +36,14 @@ jobs:
 
       - name: Run migration and schema dump
         run: |
+          mysql -h localhost -u root -e "CREATE DATABASE IF NOT EXISTS laravel;"
+          mysql -h localhost -u root laravel < database/database.sql
           php artisan migrate --force
           php artisan schema:dump --prune
         env:
-          DB_HOST: 127.0.0.1
-          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          DB_HOST: localhost
           DB_DATABASE: laravel
           DB_USERNAME: root
-          
 
       - name: Deploy to production
         run: |
@@ -61,5 +51,3 @@ jobs:
           sudo apt install -y nginx
           cd /var/www/html
           git clone https://github.com/Mohamed-Dayem/Backend-laravel/tree/10.x.git
-          
-          
