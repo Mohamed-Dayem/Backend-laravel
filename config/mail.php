@@ -1,134 +1,98 @@
 <?php
 
+// Return an array containing the mail configuration for the application.
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Default Mailer
-    |--------------------------------------------------------------------------
-    |
-    | This option controls the default mailer that is used to send any email
-    | messages sent by your application. Alternative mailers may be setup
-    | and used as needed; however, this mailer will be used by default.
-    |
-    */
-
+    // The 'default' key specifies the default mailer that will be used by the application.
     'default' => env('MAIL_MAILER', 'smtp'),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Mailer Configurations
-    |--------------------------------------------------------------------------
-    |
-    | Here you may configure all of the mailers used by your application plus
-    | their respective settings. Several examples have been configured for
-    | you and you are free to add your own as your application requires.
-    |
-    | Laravel supports a variety of mail "transport" drivers to be used while
-    | sending an e-mail. You will specify which one you are using for your
-    | mailers below. You are free to add additional mailers as required.
-    |
-    | Supported: "smtp", "sendmail", "mailgun", "ses", "ses-v2",
-    |            "postmark", "log", "array", "failover", "roundrobin"
-    |
-    */
-
+    // The 'mailers' key contains an array of mailer configurations that can be used by the application.
     'mailers' => [
+
+        // The 'smtp' key contains the SMTP mailer configuration.
         'smtp' => [
-            'transport' => 'smtp',
-            'url' => env('MAIL_URL'),
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
-            'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN'),
+            'transport' => 'smtp', // Specify that this mailer will use SMTP.
+            'url' => env('MAIL_URL'), // The URL for the SMTP server.
+            'host' => env('MAIL_HOST', 'smtp.mailgun.org'), // The hostname or IP address of the SMTP server.
+            'port' => env('MAIL_PORT', 587), // The port number to use when connecting to the SMTP server.
+            'encryption' => env('MAIL_ENCRYPTION', 'tls'), // The encryption method to use when connecting to the SMTP server.
+            'username' => env('MAIL_USERNAME'), // The username to use when connecting to the SMTP server.
+            'password' => env('MAIL_PASSWORD'), // The password to use when connecting to the SMTP server.
+            'timeout' => null, // The timeout value in seconds for connecting to the SMTP server.
+            'local_domain' => env('MAIL_EHLO_DOMAIN'), // The local domain to use when identifying to the SMTP server.
         ],
 
+        // The 'ses' key contains the Amazon SES mailer configuration.
         'ses' => [
-            'transport' => 'ses',
+            'transport' => 'ses', // Specify that this mailer will use Amazon SES.
         ],
 
+        // The 'postmark' key contains the Postmark mailer configuration.
         'postmark' => [
-            'transport' => 'postmark',
-            // 'message_stream_id' => null,
-            // 'client' => [
-            //     'timeout' => 5,
+            'transport' => 'postmark', // Specify that this mailer will use Postmark.
+            // 'message_stream_id' => null, // The ID of the message stream to use when sending emails through Postmark.
+            // 'client' => [ // Configuration options for the Postmark client.
+            //     'timeout' => 5, // The timeout value in seconds for connecting to the Postmark API.
             // ],
         ],
 
+        // The 'mailgun' key contains the Mailgun mailer configuration.
         'mailgun' => [
-            'transport' => 'mailgun',
-            // 'client' => [
-            //     'timeout' => 5,
+            'transport' => 'mailgun', // Specify that this mailer will use Mailgun.
+            // 'client' => [ // Configuration options for the Mailgun client.
+            //     'timeout' => 5, // The timeout value in seconds for connecting to the Mailgun API.
             // ],
         ],
 
+        // The 'sendmail' key contains the Sendmail mailer configuration.
         'sendmail' => [
-            'transport' => 'sendmail',
-            'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs -i'),
+            'transport' => 'sendmail', // Specify that this mailer will use Sendmail.
+            'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs -i'), // The path to the Sendmail binary.
         ],
 
+        // The 'log' key contains the Log mailer configuration.
         'log' => [
-            'transport' => 'log',
-            'channel' => env('MAIL_LOG_CHANNEL'),
+            'transport' => 'log', // Specify that this mailer will log emails instead of sending them.
+            'channel' => env('MAIL_LOG_CHANNEL'), // The name of the Log channel to use for logging emails.
         ],
 
+        // The 'array' key contains the Array mailer configuration.
         'array' => [
-            'transport' => 'array',
+            'transport' => 'array', // Specify that this mailer will use an array of messages.
         ],
 
+        // The 'failover' key contains the Failover mailer configuration.
         'failover' => [
-            'transport' => 'failover',
-            'mailers' => [
+            'transport' => 'failover', // Specify that this mailer will use a failover strategy.
+            'mailers' => [ // The mailers to use in the failover strategy.
                 'smtp',
                 'log',
             ],
         ],
 
+        // The 'roundrobin' key contains the Round Robin mailer configuration.
         'roundrobin' => [
-            'transport' => 'roundrobin',
-            'mailers' => [
+            'transport' => 'roundrobin', // Specify that this mailer will use a round robin strategy.
+            'mailers' => [ // The mailers to use in the round robin strategy.
                 'ses',
                 'postmark',
             ],
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Global "From" Address
-    |--------------------------------------------------------------------------
-    |
-    | You may wish for all e-mails sent by your application to be sent from
-    | the same address. Here, you may specify a name and address that is
-    | used globally for all e-mails that are sent by your application.
-    |
-    */
-
+    // The 'from' key contains the default 'from' address and name for emails.
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'), // The default 'from' email address.
+        'name' => env('MAIL_FROM_NAME', 'Example'), // The default 'from' name.
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Markdown Mail Settings
-    |--------------------------------------------------------------------------
-    |
-    | If you are using Markdown based email rendering, you may configure your
-    | theme and component paths here, allowing you to customize the design
-    | of the emails. Or, you may simply stick with the Laravel defaults!
-    |
-    */
-
+    // The 'markdown' key contains the Markdown mail settings.
     'markdown' => [
-        'theme' => 'default',
+        'theme' => 'default', // The default Markdown theme.
 
+        // The 'paths' key contains an array of directories that contain Markdown email templates.
         'paths' => [
             resource_path('views/vendor/mail'),
         ],
     ],
-
 ];
