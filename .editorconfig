@@ -1,5 +1,10 @@
 # Enable syntax highlighting
-syntax: yaml
+syntax: yaml  # This line sets the syntax highlighting to YAML
 
 # Set the charset, end of line, and indent style
-editor.code conformance: 
+editor.code_conformance:  # This line sets the code conformance options for the editor
+
+  # The following lines set the charset, end of line, and indent style options
+  charset: utf-8  # This line sets the charset to UTF-8
+  eol: lf  # This line sets the end of line style to LF (Unix-style)
+  indent_style: space  # This line sets the indent style to spaces (as opposed to tabs)
