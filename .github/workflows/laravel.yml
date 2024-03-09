@@ -28,19 +28,13 @@ jobs:
           php-version: 8.1
           extensions: curl, dom, fileinfo, filter, iconv, json, libxml, mbstring, openssl, pcntl, pcre, pdo, simplexml, sqlite, pdo_sqlite, tokenizer, xml, xmlwriter, zip
 
-      - name: Install PHP dependencies (composer)
-        run: composer install --no-interaction --no-suggest
-
-      
-
-
-      - name: Run migration and schema dump
-        env:
-          DB_DATABASE: laravel
-          DB_USERNAME: root
+      - name: Install dependencies
         run: |
-          php artisan migrate --force
-          php artisan schema:dump --prune
+          composer install --no-autoloader --no-scripts
+          composer dump-autoload --optimize --no-dev --classmap-authoritative
+      
+      - name: Migrate
+        run: php artisan migrate --force
        
 
       - name: Deploy to production
