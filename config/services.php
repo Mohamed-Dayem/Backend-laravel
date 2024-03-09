@@ -1,34 +1,67 @@
 <?php
 
-return [
+namespace App\Providers;
 
-    /*
-    |--------------------------------------------------------------------------
-    | Third Party Services
-    |--------------------------------------------------------------------------
-    |
-    | This file is for storing the credentials for third party services such
-    | as Mailgun, Postmark, AWS and more. This file provides the de facto
-    | location for this type of information, allowing packages to have
-    | a conventional file to locate the various service credentials.
-    |
-    */
+use Illuminate\Support\Facades\Validator;
 
-    'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
-        'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
-        'scheme' => 'https',
-    ],
+class ThirdPartyServicesProvider
+{
+    /**
+     * The available third-party services.
+     *
+     * @var array
+     */
+    protected $services = [
+        'mailgun' => [
+            'domain' => null,
+            'secret' => null,
+            'endpoint' => 'api.mailgun.net',
+            'scheme' => 'https',
+        ],
+        'postmark' => [
+            'token' => null,
+        ],
+        'ses' => [
+            'key' => null,
+            'secret' => null,
+            'region' => 'us-east-1',
+        ],
+        'sendgrid' => [
+            'key' => null,
+        ],
+        'sparkpost' => [
+            'key' => null,
+        ],
+    ];
 
-    'postmark' => [
-        'token' => env('POSTMARK_TOKEN'),
-    ],
+    /**
+     * Validate and set the third-party services configuration.
+     *
+     * @return array
+     */
+    public function provide()
+    {
+        $services = $this->services;
 
-    'ses' => [
-        'key' => env('AWS_ACCESS_KEY_ID'),
-        'secret' => env('AWS_SECRET_ACCESS_KEY'),
-        'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
-    ],
+        Validator::make(
+            $this->getServiceValues($services),
+            $this->getServiceRules($services)
+        )->validate();
 
-];
+        return $services;
+    }
+
+    /**
+     * Get the service values from the environment.
+     *
+     * @param  array  $services
+     * @return array
+     */
+    protected function getServiceValues(array $services)
+    {
+        return array_map(function ($service) {
+            return array_merge($service, [
+                'domain' => env("THIRD_PARTY_{$service['name']}_DOMAIN"),
+                'secret' => env("THIRD_PARTY_{$service['name']}_SECRET"),
+                'token' => env("THIRD_PARTY_{$service['name']}_TOKEN"),
+                'key' => env("THIRD_PARTY_{$
