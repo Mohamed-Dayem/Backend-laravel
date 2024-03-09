@@ -1,21 +1,19 @@
-# This is a sample .gitignore file for a public directory
+# This is a .gitignore file for a public directory
+# It specifies which files and directories to ignore when committing to version control
 
-# Ignore all files and directories
+# Ignore all files and directories (except those explicitly allowed)
 *
 
-# Except for the following files and directories
+# However, the following files and directories should be included
 !.htaccess
 !.htpasswd
 !index.html
-!public/
-!public/css/
-!public/js/
-!public/images/
+!public/  # Include the entire public directory
 
-# In the public directory, ignore all files and directories
+# Within the public directory, ignore all files and directories (except those explicitly allowed)
 public/*
 
-# Except for the following files and directories
+# But include the following specific files
 !public/css/style.css
 !public/js/script.js
 !public/images/logo.png
