@@ -1,4 +1,4 @@
-name: Backend Laravel
+name: Backend-Laravel
 
 on:
   push:
