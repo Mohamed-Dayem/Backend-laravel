@@ -14,4 +14,20 @@ class Authenticate extends Middleware
     {
         return $request->expectsJson() ? null : route('login');
     }
+
+    /**
+     * Determine if the user is logged in to an arbitrary guard.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  array  $guards
+     * @return void
+     */
+    protected function authenticate($request, array $guards)
+    {
+        $this->authenticateViaSession($request, $guards);
+
+        if (method_exists($this, 'authenticateViaToken')) {
+            $this->authenticateViaToken($request, $guards);
+        }
+    }
 }
