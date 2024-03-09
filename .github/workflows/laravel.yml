@@ -34,6 +34,6 @@ jobs:
 
     - name: Deploy to server
         run: |
-          cd /var/www/html
-          git pull
-          php artisan migrate
+         cd /var/www/html
+         git pull
+         php artisan migrate
