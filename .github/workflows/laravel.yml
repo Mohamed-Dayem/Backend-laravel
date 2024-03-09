@@ -32,12 +32,15 @@ jobs:
         run: composer install --no-interaction --no-suggest
 
       - name: install-mysql
-        run: sudo apt-get install -y mysql-client
+        run: |
+         sudo apt-get install -y mysql-client
+         sudo systemctl status mysql
+         sudo systemctl start mysql
 
 
       - name: Run migration and schema dump
         run: |
-          mysql -h localhost -u root -e "CREATE DATABASE IF NOT EXISTS laravel;"
+          mysql -h localhost -u root -S /var/run/mysqld/mysqld.sock -e "CREATE DATABASE IF NOT EXISTS laravel;"
           mysql -h localhost -u root laravel < database/database.sql
           php artisan migrate --force
           php artisan schema:dump --prune
