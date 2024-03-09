@@ -17,8 +17,8 @@ return [
 
     'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', sprintf(
         '%s%s',
-        'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1',
-        Sanctum::currentApplicationUrlWithPort()
+        'localhost,' . env('APP_URL') . ',127.0.0.1,127.0.0.1:' . env('APP_PORT'),
+        '::1'
     ))),
 
     /*
@@ -33,7 +33,7 @@ return [
     |
     */
 
-    'guard' => ['web'],
+    'guard' => [env('SANCTUM_GUARD', 'web')],
 
     /*
     |--------------------------------------------------------------------------
@@ -46,7 +46,7 @@ return [
     |
     */
 
-    'expiration' => null,
+    'expiration' => env('SANCTUM_EXPIRATION', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -81,3 +81,4 @@ return [
     ],
 
 ];
+
