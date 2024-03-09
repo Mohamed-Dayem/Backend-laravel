@@ -35,6 +35,10 @@ jobs:
 
 
       - name: Run migration and schema dump
+        env:
+          DB_DATABASE: laravel
+          DB_USERNAME: forge
+          DB_PASSWORD:
         run: |
           php artisan migrate --force
           php artisan schema:dump --prune
