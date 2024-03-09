@@ -1,6 +1,13 @@
+# This is the root directory of the project
 *
-!.git
+
+# This directory contains the Git repository for the project
+!.git/
+
+# This file lists files and directories that should be ignored by Git
 !.gitignore
+
+# This file contains information about the project, including how to use it, contribute to it, and build it
 !README.md
-!LICENSE
+
 
