@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Create a new table to store password reset tokens
         Schema::create('password_reset_tokens', function (Blueprint $table) {
+            // Use the user's email address as the primary key
             $table->string('email')->primary();
+            // Store the token itself
             $table->string('token');
+            // Store the timestamp when the token was created
             $table->timestamp('created_at')->nullable();
         });
     }
@@ -22,7 +26,4 @@ return new class extends Migration
      * Reverse the migrations.
      */
     public function down(): void
-    {
-        Schema::dropIfExists('password_reset_tokens');
-    }
-};
+
